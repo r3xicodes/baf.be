@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Air Force operations, commands, and global presence.">
+    <title>Operations - Belgian Air Force Virtual MILSIM</title>
+    <link rel="icon" type="image/png" href="../media/Roundel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Skip to Main Content Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header-main" class="header">
+        <!-- Header Top: Logo and Utilities -->
+        <div class="header-top">
+            <div class="container">
+                <div class="header-flex">
+                    <div class="header-logo">
+                        <img src="../media/SCR-20250225-ptwo.png" alt="Belgian Air Force Logo" class="logo-image">
+                        <div class="logo-text">
+                            <h1>Belgian Air Force</h1>
+                            <p class="tagline">Force Aérienne Belge</p>
+                        </div>
+                    </div>
+                    <div class="header-utilities">
+                        <div class="search-container">
+                            <button class="search-toggle" aria-label="Search" title="Search">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <div class="search-panel">
+                                <input type="text" class="search-input" placeholder="Search...">
+                                <button class="search-submit" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="nav-main" class="nav-main" aria-label="Main navigation">
+            <div class="container">
+                <ul class="nav-menu" role="menubar">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link" role="menuitem">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link" role="menuitem">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="operations.html" class="nav-link" role="menuitem" aria-current="page">Operations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="careers.html" class="nav-link" role="menuitem">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="news.html" class="nav-link" role="menuitem">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="search.html" class="nav-link" role="menuitem">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Mobile Navigation Footer -->
+            <div class="nav-mobile-footer">
+                <div class="nav-social">
+                    <a href="#" title="Facebook" aria-label="Visit our Facebook page"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter" aria-label="Visit our Twitter page"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram" aria-label="Visit our Instagram page"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="YouTube" aria-label="Visit our YouTube channel"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><span aria-current="page">Operations</span></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero Section with Slideshow -->
+    <section class="hero-section">
+        <div class="hero-carousel">
+            <div class="hero-slide active" style="background-image: url('../media/f16-hero.jpg');">
+                <div class="hero-content">
+                    <h2>Air Force Operations</h2>
+                    <p>Command Structure and Operational Capabilities</p>
+                </div>
+            </div>
+            
+            <!-- Slideshow Controls -->
+            <div class="hero-controls">
+                <button class="hero-btn" id="prev-slide" title="Previous slide" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                <button class="hero-btn" id="next-slide" title="Next slide" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- Slide Indicators -->
+            <div class="hero-indicators">
+                <span class="indicator active" data-slide="0" aria-label="Slide 1"></span>
+            </div>
+            
+            <div class="hero-counter"><span id="slide-counter">1</span> / <span id="total-slides">1</span></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container" id="main-content">
+        <!-- Operations Overview -->
+        <section class="featured-section">
+            <h2>BAF Operations Overview</h2>
+            <div style="background-color: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <p style="font-size: 16px; line-height: 1.8; color: #666; margin-bottom: 20px;">
+                    The Belgian Air Force operates multiple tactical wings and support commands across Belgian territory and allied locations. Our operations focus on air superiority, multirole strike operations, air defense, close air support, strategic and tactical airlift, helicopter operations, pilot training, and reconnaissance capabilities.
+                </p>
+                <p style="font-size: 16px; line-height: 1.8; color: #666;">
+                    We maintain continuous operational readiness and are committed to defending Belgian airspace, maintaining sovereign operations, and contributing to international security operations. The force operates under independent command structures with allied nations across Europe.
+                </p>
+            </div>
+        </section>
+
+        <!-- Major Operations -->
+        <section class="featured-section">
+            <h2>Tactical Wings and Squadrons</h2>
+            <div class="featured-grid">
+                <article class="featured-card">
+                    <h3>1st Tactical Wing - Florennes</h3>
+                    <p><strong>1st Fighter Squadron:</strong> Air Superiority operations with F-16 Fighting Falcon aircraft. <strong>2nd Fighter Squadron:</strong> Multirole Strike operations with F-16 Fighting Falcon aircraft.</p>
+                </article>
+                <article class="featured-card">
+                    <h3>2nd Tactical Wing - Kleine-Brogel</h3>
+                    <p><strong>3rd Fighter Squadron:</strong> Quick Reaction Alert (QRA) and Air Defense with F-16 Fighting Falcon aircraft. <strong>4th Fighter Squadron:</strong> Close Air Support operations with F-16 Fighting Falcon aircraft.</p>
+                </article>
+                <article class="featured-card">
+                    <h3>15th Air Transport Wing - Melsbroek</h3>
+                    <p><strong>20th Transport Squadron:</strong> Strategic Airlift operations with Airbus A400M Atlas aircraft. <strong>21st Transport Squadron:</strong> Tactical Airlift operations with C-130 Hercules aircraft.</p>
+                </article>
+                <article class="featured-card">
+                    <h3>Air Mobility Wing - Beauvechain</h3>
+                    <p><strong>40th Helicopter Squadron:</strong> Search & Rescue and Utility operations with NH90 Helicopter. <strong>41st Helicopter Squadron:</strong> Tactical Transport operations with NH90 Helicopter.</p>
+                </article>
+                <article class="featured-card">
+                    <h3>Training Command</h3>
+                    <p><strong>50th Training Squadron:</strong> Pilot Training programs with SF-260 trainer aircraft. <strong>51st Advanced Squadron:</strong> Advanced Jet Training with Alpha Jet aircraft.</p>
+                </article>
+                <article class="featured-card">
+                    <h3>Air Support Command</h3>
+                    <p><strong>60th UAV Squadron:</strong> Intelligence, Surveillance & Reconnaissance with MQ-9 SkyGuardian aircraft. <strong>61st Support Squadron:</strong> Logistics and Ground Support operations.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Operational Commands -->
+        <section class="mission-section">
+            <h2>Operational Roles</h2>
+            <div class="mission-content">
+                <p><strong>Air Superiority:</strong> Maintaining dominance in air operations to ensure freedom of operations for Belgian forces through F-16 and future F-35 fighter squadrons.</p>
+                <p style="margin-top: 15px;"><strong>Multirole Strike:</strong> Providing tactical strike capabilities supporting ground operations and international missions across multiple theaters.</p>
+                <p style="margin-top: 15px;"><strong>Air Defense:</strong> Quick Reaction Alert (QRA) and continuous air defense operations protecting Belgian airspace and national territory.</p>
+                <p style="margin-top: 15px;"><strong>Strategic Airlift:</strong> Heavy transport capabilities with the Airbus A400M Atlas for strategic deployment of personnel and equipment.</p>
+                <p style="margin-top: 15px;"><strong>Helicopter Operations:</strong> Search & Rescue, utility transport, and tactical helicopter operations supporting military and civilian requirements.</p>
+                <p style="margin-top: 15px;"><strong>Intelligence & Reconnaissance:</strong> Advanced ISR capabilities through MQ-9 Reaper UAV operations for reconnaissance and surveillance missions.</p>
+            </div>
+        </section>
+
+        <!-- Current Aircraft Fleet -->
+        <section class="facts-section">
+            <h2>Current Aircraft Fleet</h2>
+            <div style="overflow-x: auto; margin-top: 20px;">
+                <table style="width: 100%; border-collapse: collapse; background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <thead>
+                        <tr style="background-color: #ce1126; color: white;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Aircraft</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Origin</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Type</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Variant</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">In Service</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;" colspan="6">Combat Aircraft</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">F-16 Fighting Falcon</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">United States</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Multirole fighter</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">F-16A/B</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">44</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">160 originally delivered; being gradually replaced by F-35A</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">F-35 Lightning II</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">United States</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Multirole fighter</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">F-35A</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">12</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">34 ordered, 11 more planned</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;" colspan="6">Transport</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Airbus A400M Atlas</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Europe</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Transport</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">7</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Based at Melsbroek</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">Dassault Falcon 7X</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">France</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">VIP transport</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">2</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Aircraft leased</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Cessna 408 SkyCourier</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">United States</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Transport / SOF Air</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">5 on order</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;" colspan="6">Helicopters</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">AgustaWestland AW109</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Italy</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Medevac / Scout</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">A109BA</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">10</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Being phased out; replacement: Airbus H145M</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">Airbus H145M</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Europe</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Multirole / Utility</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">H145M</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">15 ordered</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">NHIndustries NH90</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Europe</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">SAR / Utility</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">NFH</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">4</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">To be modified for ASW role (ship-based)</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;" colspan="6">Trainer</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Pilatus PC-7 MKX</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Switzerland</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Basic trainer</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">PC-7 MKX</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">18 on order</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">SIAI-Marchetti SF.260</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Italy</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Ab initio trainer</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">—</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">19</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">To be replaced by PC-7 MKX</td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;" colspan="6">UCAV</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">MQ-9B SkyGuardian</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">United States</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Surveillance / UCAV</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">MQ-9B</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">3</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">4 ordered</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
+                <strong>Total Aircraft in Service: 82</strong>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-main" class="footer">
+        <div class="footer-content">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-section">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="about.html">About the Belgian Air Force</a></li>
+                            <li><a href="operations.html">Operations</a></li>
+                            <li><a href="careers.html">Careers</a></li>
+                            <li><a href="news.html">News</a></li>
+                            <li><a href="sitemap.html">Sitemap</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#">Recruiting Office</a></li>
+                            <li><a href="#">Career Portal</a></li>
+                            <li><a href="#">Belgian Air Force Official</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="#">FOIA</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Connect With Us</h4>
+                        <div class="social-icons-footer">
+                            <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" title="YouTube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <p class="follow-text">Follow for latest updates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 United States Air Force | Virtual Military Simulation</p>
+                <p class="disclaimer">This is a virtual simulation website for educational purposes. Not affiliated with the official U.S. Air Force.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
+

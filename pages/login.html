@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Belgian Air Force Personnel Portal - Secure Login" />
+    <title>Personnel Portal - Belgian Air Force</title>
+    <link rel="icon" type="image/png" href="../media/Roundel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Advanced Login Page Styling */
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #2d3748 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../media/f16-hero.jpg') center/cover no-repeat;
+            opacity: 0.1;
+            z-index: -2;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(49, 130, 206, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(206, 17, 38, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(255, 193, 7, 0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ce1126, #3182ce, #ffc107);
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #ce1126, #3182ce);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(206, 17, 38, 0.3);
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .login-logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .login-header h1 {
+            color: #1a2332;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #666;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0 5px;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 15px;
+            font-size: 12px;
+            color: #3182ce;
+            font-weight: 600;
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 18px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ce1126, #b50e1e);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(206, 17, 38, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            width: auto;
+        }
+
+        .forgot-password {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #2c5282;
+            text-decoration: underline;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0 15px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            border-color: #3182ce;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(49, 130, 206, 0.2);
+        }
+
+        .social-btn i {
+            margin-right: 8px;
+        }
+
+        .register-link {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #3182ce;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #2c5282;
+            text-decoration: underline;
+        }
+
+        .security-notice {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #856404;
+        }
+
+        .security-notice i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ce1126;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error message */
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #28a745;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .login-card {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 24px;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+        }
+
+        /* Particle animation background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 2s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <img src="../media/Roundel.png" alt="Belgian Air Force Logo">
+                </div>
+                <h1>Personnel Portal</h1>
+                <p>Secure Access to Belgian Air Force Systems</p>
+            </div>
+
+            <div id="error-message" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="error-text">Invalid credentials. Please try again.</span>
+            </div>
+
+            <div id="success-message" class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <span id="success-text">Login successful! Redirecting...</span>
+            </div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username or Email</label>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+
+                <div class="login-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Access Portal
+                </button>
+
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Authenticating...</p>
+                </div>
+            </form>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="loginWithAzure()">
+                    <i class="fas fa-cloud"></i> Azure AD
+                </button>
+                <button class="social-btn" onclick="loginWithCertificate()">
+                    <i class="fas fa-certificate"></i> Smart Card
+                </button>
+            </div>
+
+            <div class="register-link">
+                New personnel? <a href="create-account.html">Request Access</a>
+            </div>
+
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <strong>Security Notice:</strong> This system is monitored and all access attempts are logged. Unauthorized access is prohibited and may result in disciplinary action.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (window.location.protocol === 'file:') {
+            window.location.href = 'http://localhost:3000/pages/login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+            const loading = document.getElementById('loading');
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+                loading.style.display = 'block';
+
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const remember = document.getElementById('remember').checked;
+
+                try {
+                    const resp = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password }),
+                        credentials: 'include' // Include cookies in request
+                    });
+                    let data;
+                    try {
+                        data = await resp.json();
+                    } catch (jsonErr) {
+                        const text = await resp.clone().text();
+                        throw new Error(`Invalid server response (${resp.status}): ${text.slice(0, 200)}`);
+                    }
+                    loading.style.display = 'none';
+                    if (!resp.ok || !data.success) {
+                        errorMessage.style.display = 'block';
+                        document.getElementById('error-text').textContent = data.error || `Login failed (${resp.status})`;
+                        return;
+                    }
+
+                    successMessage.style.display = 'block';
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    if (remember) localStorage.setItem('rememberedUser', username);
+
+                    setTimeout(() => {
+                        window.location.href = 'staff-portal.html';
+                    }, 1000);
+                } catch (err) {
+                    loading.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    document.getElementById('error-text').textContent = err.message || 'Server error. Try again later.';
+                    console.error('Login error:', err);
+                }
+            });
+
+            const rememberedUser = localStorage.getItem('rememberedUser');
+            if (rememberedUser) {
+                document.getElementById('username').value = rememberedUser;
+                document.getElementById('remember').checked = true;
+            }
+
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('forgot-password')) {
+                    e.preventDefault();
+                    alert('Password reset requires administrator assistance in this demo.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

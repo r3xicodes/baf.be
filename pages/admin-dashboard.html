@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin Dashboard - Personnel Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f6fb; color: #1a2332; }
+        .container { max-width: 1100px; margin: 110px auto 40px; padding: 20px; }
+        .card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+        h1 { font-size: 22px; margin-bottom: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { padding: 12px 10px; border-bottom: 1px solid #eef2f7; text-align: left; }
+        th { background: #f8fafc; font-size: 13px; color: #6b7280; }
+        .btn { padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; }
+        .btn-approve { background: #28a745; color: white; }
+        .btn-reject { background: #dc3545; color: white; }
+        .btn-ban { background: #6c757d; color: white; }
+        .meta { font-size: 12px; color: #6b7280; }
+        .top-actions { display:flex; gap:10px; align-items:center; justify-content:space-between; }
+        .ban-input { padding:8px 10px; border-radius:8px; border:1px solid #e5e7eb; }
+        .small { font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-actions">
+            <h1>Admin Dashboard — Pending Account Requests</h1>
+            <div>
+                <input class="ban-input" id="ban-ip" placeholder="IP to ban (e.g. 127.0.0.1)">
+                <button class="btn btn-ban" id="ban-btn">Ban IP</button>
+            </div>
+        </div>
+
+        <div class="card" id="pending-card">
+            <div id="pending-list">
+                <p class="meta">Loading pending accounts...</p>
+            </div>
+            <div class="pagination" id="pagination" style="margin-top:20px;text-align:center;"></div>
+        </div>
+
+        <hr style="margin:30px 0;border:none;border-top:1px solid #eef2f7;">
+
+        <h2 style="margin-top:30px;">Audit Log</h2>
+        <div class="card">
+            <div id="audit-list">
+                <p class="meta">Loading audit log...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const LIMIT = 10;
+
+        async function fetchPending(page = 1) {
+            const resp = await fetch(`/api/pending?page=${page}&limit=${LIMIT}`);
+            const data = await resp.json();
+            const list = document.getElementById('pending-list');
+            if (!resp.ok || !data.success) {
+                list.innerHTML = `<p class="meta small">Failed to load pending accounts: ${data.error || 'Unauthorized'}</p>`;
+                return;
+            }
+            const items = data.pending;
+            currentPage = page;
+            if (!items || items.length === 0) {
+                list.innerHTML = '<p class="meta">No pending account requests.</p>';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            let html = '<table><thead><tr><th>Username</th><th>Name / Email</th><th>IP</th><th>Submitted</th><th>Actions</th></tr></thead><tbody>';
+            for (const p of items) {
+                const name = (p.firstName || '') + (p.lastName ? (' ' + p.lastName) : '');
+                html += `<tr id="row-${p.id}"><td>${p.username}</td><td><strong>${name || p.username}</strong><br><a href="mailto:${p.email}">${p.email}</a></td><td>${p.ip}</td><td>${new Date(p.createdAt).toLocaleString()}</td><td><button class="btn btn-approve" data-id="${p.id}">Approve</button> <button class="btn btn-reject" data-id="${p.id}">Reject</button> <button class="btn btn-ban" data-ip="${p.ip}">Ban IP</button></td></tr>`;
+            }
+            html += '</tbody></table>';
+            list.innerHTML = html;
+
+            // Render pagination
+            const paginationDiv = document.getElementById('pagination');
+            let paginationHtml = '';
+            if (data.pages > 1) {
+                paginationHtml = '<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;">';
+                if (page > 1) paginationHtml += `<button class="btn" style="background:#007bff;color:white;font-size:12px;" onclick="fetchPending(${page-1})">← Prev</button>`;
+                for (let i = 1; i <= data.pages; i++) {
+                    const active = i === page ? 'background:#007bff;color:white;' : 'background:#f0f0f0;';
+                    paginationHtml += `<button class="btn" style="${active}font-size:12px;" onclick="fetchPending(${i})">${i}</button>`;
+                }
+                if (page < data.pages) paginationHtml += `<button class="btn" style="background:#007bff;color:white;font-size:12px;" onclick="fetchPending(${page+1})">Next →</button>`;
+                paginationHtml += '</div>';
+                paginationHtml += `<p class="meta" style="margin-top:10px;">Page ${page} of ${data.pages} (${data.total} total)</p>`;
+            }
+            paginationDiv.innerHTML = paginationHtml;
+
+            // attach handlers
+            document.querySelectorAll('.btn-approve').forEach(b => b.addEventListener('click', approveHandler));
+            document.querySelectorAll('.btn-reject').forEach(b => b.addEventListener('click', rejectHandler));
+            document.querySelectorAll('.btn-ban').forEach(b => b.addEventListener('click', banIpHandler));
+        }
+
+        async function fetchAuditLog() {
+            const resp = await fetch('/api/audit?limit=100');
+            const data = await resp.json();
+            const list = document.getElementById('audit-list');
+            if (!resp.ok || !data.success) {
+                list.innerHTML = `<p class="meta">Failed to load audit log: ${data.error || 'Error'}</p>`;
+                return;
+            }
+            const entries = data.entries || [];
+            if (entries.length === 0) {
+                list.innerHTML = '<p class="meta">No audit entries yet.</p>';
+                return;
+            }
+            let html = '<table style="font-size:12px;"><thead><tr><th>Timestamp</th><th>Action</th><th>User</th><th>Details</th><th>Status</th></tr></thead><tbody>';
+            for (const e of entries.reverse()) {
+                const status = e.success ? '<span style="color:green;">✓ OK</span>' : '<span style="color:red;">✗ FAIL</span>';
+                html += `<tr><td>${new Date(e.timestamp).toLocaleString()}</td><td><code style="background:#f0f0f0;padding:2px 4px;border-radius:3px;">${e.action}</code></td><td>${e.username}</td><td>${e.details}</td><td>${status}</td></tr>`;
+            }
+            html += '</tbody></table>';
+            list.innerHTML = html;
+        }
+
+        async function approveHandler(e) {
+            const id = e.currentTarget.dataset.id;
+            const confirmOk = confirm('Approve account request?');
+            if (!confirmOk) return;
+            const resp = await fetch('/api/approve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }), credentials: 'include' });
+            const data = await resp.json();
+            if (!resp.ok || !data.success) return alert('Approve failed: ' + (data.error || 'server error'));
+            if (data.previewUrl) alert('Email preview: ' + data.previewUrl);
+            document.getElementById('row-' + id).remove();
+            fetchAuditLog();
+        }
+
+        async function rejectHandler(e) {
+            const id = e.currentTarget.dataset.id;
+            const reason = prompt('Optional reason for rejection (sent to user):');
+            if (reason === null) return;
+            const resp = await fetch('/api/reject', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, reason }), credentials: 'include' });
+            const data = await resp.json();
+            if (!resp.ok || !data.success) return alert('Reject failed: ' + (data.error || 'server error'));
+            if (data.previewUrl) alert('Rejection email preview: ' + data.previewUrl);
+            document.getElementById('row-' + id).remove();
+            fetchAuditLog();
+        }
+
+        async function banIpHandler(e) {
+            const ip = e.currentTarget.dataset.ip || document.getElementById('ban-ip').value.trim();
+            if (!ip) return alert('IP required');
+            const resp = await fetch('/api/ban', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip, reason: 'Banned via admin dashboard' }), credentials: 'include' });
+            const data = await resp.json();
+            if (!resp.ok || !data.success) return alert('Ban failed: ' + (data.error || 'server error'));
+            alert('IP banned: ' + ip);
+            fetchPending(currentPage);
+            fetchAuditLog();
+        }
+
+        document.getElementById('ban-btn').addEventListener('click', banIpHandler);
+
+        // Verify session and init
+        async function verifySession() {
+            const resp = await fetch('/api/session', { credentials: 'include' });
+            const data = await resp.json();
+            if (!data.authenticated) {
+                window.location.href = 'login.html';
+                return;
+            }
+            fetchPending(1);
+            fetchAuditLog();
+        }
+
+        verifySession();
+    </script>
+</body>
+</html>

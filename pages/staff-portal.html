@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Belgian Air Force Personnel Portal - Staff Dashboard" />
+    <title>Staff Portal - Belgian Air Force</title>
+    <link rel="icon" type="image/png" href="../media/Roundel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Staff Portal Styling */
+        :root {
+            --primary-color: #3182ce;
+            --secondary-color: #ce1126;
+            --accent-color: #ffc107;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --dark-bg: #1a2332;
+            --light-bg: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #1a2332;
+            --text-secondary: #666;
+            --border-color: #e1e5e9;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .portal-header {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #2d3748 100%);
+            color: white;
+            padding: 15px 30px;
+            box-shadow: var(--shadow-lg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(206, 17, 38, 0.3);
+        }
+
+        .header-logo img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .header-title p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-details h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .user-details p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            width: 280px;
+            height: calc(100vh - 80px);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-lg);
+            padding: 30px 0;
+            overflow-y: auto;
+            z-index: 900;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 5px;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+
+        .menu-link:hover,
+        .menu-link.active {
+            background: rgba(49, 130, 206, 0.1);
+            border-left-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .menu-link i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .menu-link span {
+            font-weight: 500;
+        }
+
+        .menu-section {
+            margin-top: 30px;
+            padding: 0 30px;
+        }
+
+        .menu-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 80px;
+            padding: 30px;
+            min-height: calc(100vh - 80px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-title i {
+            color: var(--primary-color);
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--primary-color);
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .card-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-change.positive {
+            color: var(--success-color);
+        }
+
+        .card-change.negative {
+            color: var(--danger-color);
+        }
+
+        /* Chat Section */
+        .chat-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chat-status {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .message-author {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .message-text {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.own {
+            flex-direction: row-reverse;
+        }
+
+        .message.own .message-content {
+            text-align: right;
+        }
+
+        .message.own .message-text {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .chat-input {
+            background: white;
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input-field:focus {
+            border-color: var(--primary-color);
+        }
+
+        .chat-send-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .chat-send-btn:hover {
+            background: #2c5282;
+            transform: scale(1.05);
+        }
+
+        /* Operations Hub */
+        .operations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .operation-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .operation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .operation-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .operation-icon.missions {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .operation-icon.intelligence {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: white;
+        }
+
+        .operation-icon.logistics {
+            background: linear-gradient(135deg, #6f42c1, #e83e8c);
+            color: white;
+        }
+
+        .operation-icon.training {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            color: white;
+        }
+
+        .operation-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .operation-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Information Hub */
+        .info-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .info-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .info-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .info-content {
+            display: none;
+        }
+
+        .info-content.active {
+            display: block;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-image {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .news-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .news-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .news-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portal-header {
+                padding: 15px 20px;
+            }
+
+            .header-title h1 {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-messages {
+                height: 300px;
+            }
+
+            .operations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+        .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+        .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+        .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Loading states */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="portal-header">
+        <div class="header-left">
+            <button class="header-btn" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-logo">
+                <img src="../media/Roundel.png" alt="Belgian Air Force Logo">
+            </div>
+            <div class="header-title">
+                <h1>Personnel Portal</h1>
+                <p>Belgian Air Force</p>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="user-info" id="user-info">
+                <div class="user-avatar" id="user-avatar">A</div>
+                <div class="user-details">
+                    <h4 id="user-name">Admin User</h4>
+                    <p id="user-role">Administrator</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="header-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="header-btn" id="logout-btn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="#dashboard" class="menu-link active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#operations" class="menu-link" data-page="operations">
+                    <i class="fas fa-cogs"></i>
+                    <span>Operations</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#communications" class="menu-link" data-page="communications">
+                    <i class="fas fa-comments"></i>
+                    <span>Communications</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#intelligence" class="menu-link" data-page="intelligence">
+                    <i class="fas fa-eye"></i>
+                    <span>Intelligence</span>
+                </a>
+            </li>
+
+            <li class="menu-section">
+                <div class="menu-section-title">Information Hub</div>
+            </li>
+            <li class="menu-item">
+                <a href="#news" class="menu-link" data-page="news">
+                    <i class="fas fa-newspaper"></i>
+                    <span>News & Updates</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#documents" class="menu-link" data-page="documents">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Documents</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#training" class="menu-link" data-page="training">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Training</span>
+                </a>
+            </li>
+
+            <li class="menu-section">
+                <div class="menu-section-title">Management</div>
+            </li>
+            <li class="menu-item">
+                <a href="#personnel" class="menu-link" data-page="personnel">
+                    <i class="fas fa-users"></i>
+                    <span>Personnel</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#reports" class="menu-link" data-page="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#settings" class="menu-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page-content active">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </h1>
+                <p class="page-subtitle">Welcome back, Commander. Here's your operational overview.</p>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-plane"></i>
+                            Active Missions
+                        </h3>
+                    </div>
+                    <div class="card-value">12</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        +2 from yesterday
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-users"></i>
+                            Personnel Status
+                        </h3>
+                    </div>
+                    <div class="card-value">98%</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-check-circle"></i>
+                        All systems operational
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-shield-alt"></i>
+                            Security Alerts
+                        </h3>
+                    </div>
+                    <div class="card-value">0</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-shield-alt"></i>
+                        No active threats
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-clock"></i>
+                            Response Time
+                        </h3>
+                    </div>
+                    <div class="card-value">2.3m</div>
+                    <div class="card-change negative">
+                        <i class="fas fa-arrow-down"></i>
+                        -0.5m from last week
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="chat-section">
+                <div class="chat-header">
+                    <div>
+                        <h3 class="chat-title">Command Channel</h3>
+                        <p class="chat-status">12 members online</p>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="header-btn">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button class="header-btn">
+                            <i class="fas fa-video"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message">
+                        <div class="message-avatar">C</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Wing Commander Sarah Johnson</span>
+                                <span class="message-time">10:30 AM</span>
+                            </div>
+                            <div class="message-text">All units, be advised: Exercise Eagle commences at 1400 hours. Ensure all pre-flight checks are complete.</div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">P</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Pilot Officer Mike Chen</span>
+                                <span class="message-time">10:32 AM</span>
+                            </div>
+                            <div class="message-text">Roger that, Commander. Squadron 1 pre-flight checks complete. Ready for deployment.</div>
+                        </div>
+                    </div>
+
+                    <div class="message own">
+                        <div class="message-avatar">A</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">System Administrator</span>
+                                <span class="message-time">10:35 AM</span>
+                            </div>
+                            <div class="message-text">Confirmed. All systems green. Intelligence reports uploaded to secure server.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <input type="text" class="chat-input-field" id="chat-input" placeholder="Type your message...">
+                    <button class="chat-send-btn" id="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations Page -->
+        <div id="operations-page" class="page-content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-cogs"></i>
+                    Operations Hub
+                </h1>
+                <p class="page-subtitle">Manage and monitor all operational activities.</p>
+            </div>
+
+            <div class="operations-grid">
+                <div class="operation-card" onclick="openOperation('missions')">
+                    <div class="operation-icon missions">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3 class="operation-title">Mission Control</h3>
+                    <p class="operation-description">Monitor active missions, assign resources, and track mission progress in real-time.</p>
+                </div>
+
+                <div class="operation-card" onclick="openOperation('intelligence')">
+                    <div class="operation-icon intelligence">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="operation-title">Intelligence Center</h3>
+                    <p class="operation-description">Access classified intelligence reports, threat assessments, and strategic analysis.</p>
+                </div>
+
+                <div class="operation-card" onclick="openOperation('logistics')">
+                    <div class="operation-icon logistics">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="operation-title">Logistics Management</h3>
+                    <p class="operation-description">Oversee supply chains, equipment maintenance, and resource allocation.</p>
+                </div>
+
+                <div class="operation-card" onclick="openOperation('training')">
+                    <div class="operation-icon training">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="operation-title">Training Operations</h3>
+                    <p class="operation-description">Schedule training exercises, track certifications, and manage personnel development.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communications Page -->
+        <div id="communications-page" class="page-content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-comments"></i>
+                    Communications
+                </h1>
+                <p class="page-subtitle">Secure communication channels and messaging systems.</p>
+            </div>
+
+            <div class="chat-section">
+                <div class="chat-header">
+                    <div>
+                        <h3 class="chat-title">Secure Communications</h3>
+                        <p class="chat-status">End-to-end encrypted</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="secure-chat-messages">
+                    <div class="message">
+                        <div class="message-avatar">S</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Security Officer</span>
+                                <span class="message-time">09:15 AM</span>
+                            </div>
+                            <div class="message-text">Daily security briefing: All systems nominal. No unauthorized access attempts detected.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <input type="text" class="chat-input-field" placeholder="Send secure message...">
+                    <button class="chat-send-btn">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Hub -->
+        <div id="news-page" class="page-content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-newspaper"></i>
+                    Information Hub
+                </h1>
+                <p class="page-subtitle">Latest updates, news, and critical information.</p>
+            </div>
+
+            <div class="info-section">
+                <div class="info-tabs">
+                    <button class="info-tab active" data-tab="news">News</button>
+                    <button class="info-tab" data-tab="alerts">Alerts</button>
+                    <button class="info-tab" data-tab="bulletins">Bulletins</button>
+                </div>
+
+                <div id="news-content" class="info-content active">
+                    <div class="news-item">
+                        <div class="news-image">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="news-content">
+                            <h4>F-35 Integration Complete</h4>
+                            <p>The Belgian Air Force has successfully completed integration of the F-35 Lightning II into its operational fleet. All pilots have completed transition training.</p>
+                            <div class="news-meta">2 hours ago • Operations Command</div>
+                        </div>
+                    </div>
+
+                    <div class="news-item">
+                        <div class="news-image">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="news-content">
+                            <h4>Personnel Reassignment</h4>
+                            <p>Major personnel reassignment effective immediately. See attached roster for updated command structure and reporting chains.</p>
+                            <div class="news-meta">4 hours ago • Personnel Division</div>
+                        </div>
+                    </div>
+
+                    <div class="news-item">
+                        <div class="news-image">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="news-content">
+                            <h4>Security Protocol Update</h4>
+                            <p>New security protocols implemented across all bases. Mandatory training session scheduled for all personnel this Friday.</p>
+                            <div class="news-meta">6 hours ago • Security Command</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="alerts-content" class="info-content">
+                    <div class="news-item">
+                        <div class="news-image" style="background: #dc3545;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="news-content">
+                            <h4>Weather Alert - Severe Storms</h4>
+                            <p>Severe thunderstorms expected across northern regions. All flight operations suspended until 1800 hours tomorrow.</p>
+                            <div class="news-meta">1 hour ago • Weather Command</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bulletins-content" class="info-content">
+                    <div class="news-item">
+                        <div class="news-image" style="background: #ffc107;">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="news-content">
+                            <h4>Exercise Schedule Update</h4>
+                            <p>Exercise "Northern Shield" rescheduled to next month due to equipment maintenance requirements.</p>
+                            <div class="news-meta">3 hours ago • Training Command</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Portal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const userData = JSON.parse(sessionStorage.getItem('user') || '{}');
+            if (!userData.username) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user info
+            document.getElementById('user-name').textContent = userData.name || userData.username;
+            document.getElementById('user-role').textContent = userData.role || 'Personnel';
+            document.getElementById('user-avatar').textContent = (userData.name || userData.username).charAt(0).toUpperCase();
+
+            // If admin, show quick Admin Dashboard button
+            if (userData.role && userData.role === 'Administrator') {
+                const headerActions = document.querySelector('.header-actions');
+                const adminBtn = document.createElement('button');
+                adminBtn.className = 'header-btn';
+                adminBtn.title = 'Admin Dashboard';
+                adminBtn.innerHTML = '<i class="fas fa-user-shield"></i>';
+                adminBtn.addEventListener('click', function() { window.location.href = 'admin-dashboard.html'; });
+                const logoutBtn = document.getElementById('logout-btn');
+                headerActions.insertBefore(adminBtn, logoutBtn);
+            }
+
+            // Sidebar toggle
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            });
+
+            // Navigation
+            const menuLinks = document.querySelectorAll('.menu-link');
+            const pages = document.querySelectorAll('.page-content');
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Remove active class from all links and pages
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(p => p.classList.remove('active'));
+
+                    // Add active class to clicked link and corresponding page
+                    this.classList.add('active');
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    document.getElementById(pageId).classList.add('active');
+
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 1024) {
+                        sidebar.classList.add('collapsed');
+                        mainContent.classList.add('expanded');
+                    }
+                });
+            });
+
+            // Chat functionality
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const chatMessages = document.getElementById('chat-messages');
+
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message own';
+                messageElement.innerHTML = `
+                    <div class="message-avatar">${userData.name.charAt(0).toUpperCase()}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">${userData.name}</span>
+                            <span class="message-time">${new Date().toLocaleTimeString()}</span>
+                        </div>
+                        <div class="message-text">${message}</div>
+                    </div>
+                `;
+
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                chatInput.value = '';
+
+                // Simulate response (demo)
+                setTimeout(() => {
+                    const responseElement = document.createElement('div');
+                    responseElement.className = 'message';
+                    responseElement.innerHTML = `
+                        <div class="message-avatar">AI</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">System AI</span>
+                                <span class="message-time">${new Date().toLocaleTimeString()}</span>
+                            </div>
+                            <div class="message-text">Message acknowledged. Processing your request...</div>
+                        </div>
+                    `;
+                    chatMessages.appendChild(responseElement);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Information tabs
+            const infoTabs = document.querySelectorAll('.info-tab');
+            const infoContents = document.querySelectorAll('.info-content');
+
+            infoTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    infoTabs.forEach(t => t.classList.remove('active'));
+                    infoContents.forEach(c => c.classList.remove('active'));
+
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab') + '-content';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+            });
+
+            // Auto-scroll chat to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        // Operation functions
+        function openOperation(type) {
+            const titles = {
+                missions: 'Mission Control Center',
+                intelligence: 'Intelligence Analysis Center',
+                logistics: 'Logistics Operations Center',
+                training: 'Training Management Center'
+            };
+
+            alert(`Opening ${titles[type]}...\n\nThis would load the full ${type} management interface with real-time data, controls, and monitoring capabilities.`);
+        }
+
+        // Real-time updates simulation
+        setInterval(() => {
+            // Simulate real-time updates
+            const statusIndicators = document.querySelectorAll('.card-change');
+            statusIndicators.forEach(indicator => {
+                // Randomly update some indicators
+                if (Math.random() > 0.95) {
+                    indicator.style.animation = 'pulse 0.5s ease';
+                    setTimeout(() => {
+                        indicator.style.animation = '';
+                    }, 500);
+                }
+            });
+        }, 30000);
+    </script>
+</body>
+</html>

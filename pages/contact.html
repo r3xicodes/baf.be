@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Belgian Air Force Virtual MILSIM</title>    <link rel="icon" type="image/png" href="../media/Roundel.png">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .contact-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #003f7f;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .form-group button {
+            background-color: #003f7f;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #0066cc;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .contact-item {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-item h3 {
+            color: #003f7f;
+            margin-bottom: 15px;
+        }
+
+        .contact-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to Main Content Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header-main" class="header">
+        <!-- Header Top: Logo and Utilities -->
+        <div class="header-top">
+            <div class="container">
+                <div class="header-flex">
+                    <div class="header-logo">
+                        <img src="../media/SCR-20250225-ptwo.png" alt="Belgian Air Force Logo" class="logo-image">
+                        <div class="logo-text">
+                            <h1>Belgian Air Force</h1>
+                            <p class="tagline">Force Aérienne Belge</p>
+                        </div>
+                    </div>
+                    <div class="header-utilities">
+                        <div class="search-container">
+                            <button class="search-toggle" aria-label="Search" title="Search">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <div class="search-panel">
+                                <input type="text" class="search-input" placeholder="Search...">
+                                <button class="search-submit" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="nav-main" class="nav-main" aria-label="Main navigation">
+            <div class="container">
+                <ul class="nav-menu" role="menubar">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link" role="menuitem">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link" role="menuitem">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="operations.html" class="nav-link" role="menuitem">Operations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="careers.html" class="nav-link" role="menuitem">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="news.html" class="nav-link" role="menuitem">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="search.html" class="nav-link" role="menuitem">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link" role="menuitem" aria-current="page">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Mobile Navigation Footer -->
+            <div class="nav-mobile-footer">
+                <div class="nav-social">
+                    <a href="#" title="Facebook" aria-label="Visit our Facebook page"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter" aria-label="Visit our Twitter page"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram" aria-label="Visit our Instagram page"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="YouTube" aria-label="Visit our YouTube channel"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><span aria-current="page">Contact</span></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero Section -->
+    <section class="hero-section" style="height: 350px; background: linear-gradient(135deg, #000000 0%, #ce1126 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 40px;">
+        <div class="hero-content">
+            <h2>Contact the Air Force</h2>
+            <p>Get in Touch with Us</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container" id="main-content">
+        <!-- Contact Form -->
+        <section class="featured-section">
+            <h2>Contact Form</h2>
+            <div id="form-response" style="display:none; padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: 600;"></div>
+            <form class="contact-form" id="contact-form" method="POST" action="https://formspree.io/f/mdaydeje">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="">-- Select Category --</option>
+                        <option value="recruitment">Recruitment Inquiry</option>
+                        <option value="operations">Operations</option>
+                        <option value="careers">Career Information</option>
+                        <option value="media">Media Relations</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Send Message</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="featured-section">
+            <h2>Other Ways to Contact Us</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Recruitment</h3>
+                    <p>Interested in joining the Air Force? Contact your local recruiting office for more information about career opportunities and enlistment.</p>
+                    <p style="margin-top: 15px;"><strong>Phone:</strong> 1-800-AFirce-1 (1-800-234-7273)</p>
+                </div>
+
+                <div class="contact-item">
+                    <h3>Public Affairs</h3>
+                    <p>For media inquiries, press releases, and public information requests, contact the Air Force Public Affairs office.</p>
+                    <p style="margin-top: 15px;"><strong>Email:</strong> contact@belgianairforce.be</p>
+                </div>
+
+                <div class="contact-item">
+                    <h3>General Information</h3>
+                    <p>For general questions about the Air Force, its operations, and services, visit the main Air Force website.</p>
+                    <p style="margin-top: 15px;"><strong>Website:</strong> www.belgianairforce.be</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Resources -->
+        <section class="mission-section">
+            <h2>Additional Resources</h2>
+            <div class="mission-content">
+                <p><strong>Air Force Social Media:</strong> Follow the Belgian Air Force on social media platforms for updates, news, and announcements.</p>
+                <p style="margin-top: 15px;"><strong>Belgian Air Force Website:</strong> The official Belgian Air Force website provides comprehensive information about operations, news, and services.</p>
+                <p style="margin-top: 15px;"><strong>recruitment.belgianairforce.be:</strong> Visit the official recruiting website to learn about career opportunities and start the application process.</p>
+                <p style="margin-top: 15px;"><strong>Veterans Services:</strong> Support and resources for Belgian Air Force veterans and their families.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-main" class="footer">
+        <div class="footer-content">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-section">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="about.html">About the Belgian Air Force</a></li>
+                            <li><a href="operations.html">Operations</a></li>
+                            <li><a href="careers.html">Careers</a></li>
+                            <li><a href="news.html">News</a></li>
+                            <li><a href="sitemap.html">Sitemap</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#">Recruiting Office</a></li>
+                            <li><a href="#">Career Portal</a></li>
+                            <li><a href="#">Belgian Air Force Official</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="#">FOIA</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Connect With Us</h4>
+                        <div class="social-icons-footer">
+                            <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" title="YouTube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <p class="follow-text">Follow for latest updates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 United States Air Force | Virtual Military Simulation</p>
+                <p class="disclaimer">This is a virtual simulation website for educational purposes. Not affiliated with the official U.S. Air Force.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
+

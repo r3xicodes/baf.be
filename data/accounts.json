@@ -1,0 +1,32 @@
+[
+  {
+    "id": "c76e1b6d-67e8-4648-bcbf-43fe4ff85ebc",
+    "username": "admin",
+    "password": "$2a$10$VewQak5QTXF0xZsbnJb2VeNW3Pj814s.XdIZzob7hldzYtgfTQNBC",
+    "role": "Administrator",
+    "name": "System Administrator",
+    "email": "admin@local",
+    "clearance": "TOP SECRET",
+    "createdAt": "2026-04-20T23:56:46.501Z"
+  },
+  {
+    "id": "91d061ab-2ce0-45cb-aa03-6bf3a287a47e",
+    "username": "pilot",
+    "password": "$2a$10$Aj3IRBVpjn8RyWFIsQktWujXsl/rH8C49wCvqsE/I5jflGoF62fte",
+    "role": "Pilot Officer",
+    "name": "John Smith",
+    "email": "pilot@local",
+    "clearance": "SECRET",
+    "createdAt": "2026-04-20T23:56:46.501Z"
+  },
+  {
+    "id": "756642c8-98c5-42d8-9f3f-c094cda16c86",
+    "username": "commander",
+    "password": "$2a$10$5BfeN2ZDk8jr58tvSHzNY.QJRhq3TFTb.i164MX9mH5OvwuL9tT2a",
+    "role": "Wing Commander",
+    "name": "Sarah Johnson",
+    "email": "commander@local",
+    "clearance": "TOP SECRET",
+    "createdAt": "2026-04-20T23:56:46.501Z"
+  }
+]

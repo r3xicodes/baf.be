@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced search with animations and real-time features for the Belgian Air Force website." />
+    <title>Search - Belgian Air Force Virtual MILSIM</title>
+    <link rel="icon" type="image/png" href="../media/Roundel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .parallax-bg {
+            background: linear-gradient(135deg, #000000 0%, #ce1126 100%);
+            height: 100vh;
+            background-attachment: fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .parallax-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../media/f16-hero.jpg') center/cover no-repeat;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        .search-hero {
+            text-align: center;
+            color: white;
+            z-index: 1;
+        }
+        .search-input-large {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            background: white;
+        }
+        .search-btn {
+            padding: 15px 30px;
+            background: #ce1126;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .search-btn:hover {
+            background: #a50e1f;
+        }
+        .results {
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .result-item:hover {
+            transform: translateY(-5px);
+        }
+        .weather-widget {
+            max-width: 420px;
+            margin: 0 auto 40px;
+            background: rgba(255,255,255,0.96);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+            border: 1px solid rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .datetime {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            color: #1f1f1f;
+        }
+        .interactive-elements {
+            margin-top: 40px;
+        }
+        .filter-btn {
+            margin: 5px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #3182ce, #2c5282);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.4);
+        }
+        .filter-btn:hover {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .search-input-large {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 2px solid #ce1126;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        .search-btn {
+            padding: 15px 30px;
+            background: #ce1126;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .search-btn:hover {
+            background: #a50e1f;
+        }
+        .results {
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-item {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #ce1126;
+        }
+        .result-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .result-header h3 {
+            margin: 0;
+            color: #003f7f;
+            font-size: 20px;
+        }
+        .result-header h3 a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .result-header h3 a:hover {
+            color: #ce1126;
+        }
+        .result-category {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .result-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .result-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #888;
+        }
+        .result-url {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .result-score {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+        .search-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .control-btn {
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .control-btn:hover {
+            background: #5a6268;
+        }
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .results-count {
+            color: #666;
+            font-weight: 500;
+        }
+        .search-history {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 15px;
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+        }
+        .history-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .history-item:hover {
+            background: #f8f9fa;
+        }
+        mark {
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header id="header-main" class="header">
+        <div class="header-top"><div class="container"><div class="header-flex"><div class="header-logo"><img src="../media/SCR-20250225-ptwo.png" alt="Belgian Air Force Logo" class="logo-image"><div class="logo-text"><h1>Belgian Air Force</h1><p class="tagline">Force Aérienne Belge</p></div></div><div class="header-utilities"><div class="search-container"><button class="search-toggle" aria-label="Search" title="Search"><i class="fas fa-search"></i></button><div class="search-panel"><input id="header-search-input" type="text" class="search-input" placeholder="Search..."><button id="header-search-submit" class="search-submit" type="button"><i class="fas fa-search"></i></button></div></div><button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></div></div></div>
+        <nav id="nav-main" class="nav-main" aria-label="Main navigation"><div class="container"><ul class="nav-menu" role="menubar"><li class="nav-item"><a href="../index.html" class="nav-link" role="menuitem">Home</a></li><li class="nav-item"><a href="about.html" class="nav-link" role="menuitem">About</a></li><li class="nav-item"><a href="operations.html" class="nav-link" role="menuitem">Operations</a></li><li class="nav-item"><a href="careers.html" class="nav-link" role="menuitem">Careers</a></li><li class="nav-item"><a href="news.html" class="nav-link" role="menuitem">News</a></li><li class="nav-item"><a href="search.html" class="nav-link active" role="menuitem" aria-current="page">Search</a></li><li class="nav-item"><a href="contact.html" class="nav-link" role="menuitem">Contact</a></li></ul></div></nav>
+    </header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><ul><li><a href="../index.html">Home</a></li><li><span aria-current="page">Search</span></li></ul></div></nav>
+    <section class="parallax-bg">
+        <div class="search-hero">
+            <h1>Advanced Search</h1>
+            <p>Find what you're looking for with our interactive search engine</p>
+            <input type="text" id="main-search" class="search-input-large" placeholder="Search the Belgian Air Force website...">
+            <button class="search-btn" onclick="performSearch()">Search</button>
+        </div>
+    </section>
+    <main id="main-content" class="container main-content">
+        <section class="featured-section">
+            <h2>Search Filters</h2>
+            <div class="interactive-elements">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="main">Main</button>
+                <button class="filter-btn" data-filter="aircraft">Aircraft</button>
+                <button class="filter-btn" data-filter="games">Games</button>
+                <button class="filter-btn" data-filter="resources">Resources</button>
+                <button class="filter-btn" data-filter="news">News</button>
+                <button class="filter-btn" data-filter="careers">Careers</button>
+                <button class="filter-btn" data-filter="bases">Bases</button>
+                <button class="filter-btn" data-filter="leadership">Leadership</button>
+                <button class="filter-btn" data-filter="contact">Contact</button>
+            </div>
+            <div class="search-controls">
+                <button class="control-btn" id="search-history-btn">Search History</button>
+                <button class="control-btn" onclick="clearSearchHistory()">Clear History</button>
+                <div class="search-history" id="search-history"></div>
+            </div>
+        </section>
+        <section class="featured-section">
+            <div class="results-header">
+                <h2>Search Results</h2>
+                <div class="results-count" id="results-count"></div>
+            </div>
+            <div id="results" class="results">
+                <!-- Search results will appear here -->
+            </div>
+        </section>
+        <section class="featured-section weather-section">
+            <h2>Weather & Local Time</h2>
+            <div class="weather-widget">
+                <div class="datetime" id="datetime">Loading...</div>
+                <div id="weather">Loading weather...</div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer"><div class="footer-content container"><p>&copy; 2026 Belgian Air Force | Force Aérienne Belge | Virtual Military Simulation</p></div></footer>
+    <script>
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.parallax-bg');
+            parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                timeZone: 'Europe/Brussels', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+            document.getElementById('datetime').textContent = now.toLocaleString('en-GB', options);
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Weather (using OpenWeatherMap API - free tier)
+        async function getWeather() {
+            try {
+                const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Brussels,BE&appid=YOUR_API_KEY&units=metric');
+                const data = await response.json();
+                document.getElementById('weather').innerHTML = `
+                    <strong>Brussels Weather</strong><br>
+                    ${data.weather[0].description}<br>
+                    ${Math.round(data.main.temp)}°C<br>
+                    Humidity: ${data.main.humidity}%
+                `;
+            } catch (error) {
+                document.getElementById('weather').textContent = 'Weather unavailable';
+            }
+        }
+        getWeather();
+
+        // Comprehensive search data with content from all pages
+        const searchData = [
+            // Main pages
+            { title: 'Home', content: 'Welcome to the Belgian Air Force virtual MILSIM website. Force Aérienne Belge. Military simulation, training, operations, careers, news, contact.', url: '../index.html', category: 'main', type: 'page', priority: 10 },
+            { title: 'About Belgian Air Force', content: 'Learn about the Belgian Air Force history, mission, values, and structure. Force Aérienne Belge overview, command structure, leadership.', url: 'about.html', category: 'about', type: 'page', priority: 9 },
+            { title: 'Operations', content: 'Current operations, mission briefings, active deployments, tactical operations, air force missions, combat operations.', url: 'operations.html', category: 'operations', type: 'page', priority: 9 },
+            { title: 'Careers', content: 'Join the Belgian Air Force virtual community. Pilot training, recruitment, career opportunities, military service, aviation careers.', url: 'careers.html', category: 'careers', type: 'page', priority: 9 },
+            { title: 'News', content: 'Latest updates, announcements, press releases, air force news, military news, command briefings, operational updates.', url: 'news.html', category: 'news', type: 'page', priority: 9 },
+            { title: 'Contact', content: 'Get in touch with the BAF team. Contact information, support, inquiries, feedback, communication channels.', url: 'contact.html', category: 'contact', type: 'page', priority: 8 },
+
+            // Aircraft pages
+            { title: 'F-16 Fighting Falcon', content: 'F-16 Fighting Falcon aircraft factsheet. Multirole fighter, air superiority, ground attack, Belgian Air Force fighter jet, avionics, weapons systems.', url: 'aircraft-f16-fighting-falcon.html', category: 'aircraft', type: 'factsheet', priority: 8 },
+            { title: 'F-35A Lightning II', content: 'F-35A Lightning II fifth-generation fighter. Stealth technology, advanced avionics, supersonic capabilities, Belgian Air Force next-generation fighter.', url: 'aircraft-f35a-lightning-ii.html', category: 'aircraft', type: 'factsheet', priority: 8 },
+            { title: 'Airbus A400M Atlas', content: 'Airbus A400M Atlas military transport aircraft. Strategic airlift, cargo transport, troop transport, Belgian Air Force transport fleet.', url: 'aircraft-airbus-a400m-atlas.html', category: 'aircraft', type: 'factsheet', priority: 7 },
+            { title: 'Dassault Falcon 7X', content: 'Dassault Falcon 7X business jet. VIP transport, executive transport, air force transport, Belgian Air Force special missions.', url: 'aircraft-dassault-falcon-7x.html', category: 'aircraft', type: 'factsheet', priority: 7 },
+            { title: 'NHIndustries NH90', content: 'NHIndustries NH90 helicopter. Tactical transport helicopter, search and rescue, special operations, Belgian Air Force rotary wing.', url: 'aircraft-nh90.html', category: 'aircraft', type: 'factsheet', priority: 7 },
+            { title: 'MQ-9B SkyGuardian', content: 'MQ-9B SkyGuardian unmanned aerial vehicle. Drone operations, reconnaissance, surveillance, intelligence gathering, Belgian Air Force UAV.', url: 'aircraft-mq9b-skyguardian.html', category: 'aircraft', type: 'factsheet', priority: 7 },
+
+            // Games and interactive content
+            { title: 'Air Force Trivia Game', content: 'Test your knowledge with our interactive quiz. Belgian Air Force trivia, aviation questions, military knowledge, educational game.', url: 'game.html', category: 'games', type: 'interactive', priority: 8 },
+            { title: '3D Base Explorer', content: 'Navigate the air base in first-person 3D. Virtual reality, base exploration, military facilities, interactive 3D environment.', url: '3d-game.html', category: 'games', type: 'interactive', priority: 8 },
+            { title: 'Missile Training Simulator', content: 'Practice missile identification and countermeasures. Air defense training, missile recognition, threat identification, defensive systems.', url: 'missile-game.html', category: 'games', type: 'interactive', priority: 8 },
+
+            // Resources and tools
+            { title: 'Call Sign Registry', content: 'Complete list of Belgian Air Force call signs. Pilot call signs, aircraft identification, radio communication, aviation terminology.', url: 'call-sign-registry.html', category: 'resources', type: 'reference', priority: 7 },
+            { title: 'Radio Phraseology', content: 'Standard radio communication procedures. Aviation radio, communication protocols, air traffic control, military radio procedures.', url: 'radio-phraseology.html', category: 'resources', type: 'reference', priority: 7 },
+            { title: 'Flight Planning Tools', content: 'Flight planning resources and tools. Navigation planning, route planning, weather considerations, mission planning.', url: 'flight-planning-tools.html', category: 'resources', type: 'tools', priority: 7 },
+
+            // Leadership and organization
+            { title: 'Leadership', content: 'Belgian Air Force leadership team. Chief of Air Force, command structure, senior leadership, military command.', url: 'leadership.html', category: 'leadership', type: 'page', priority: 7 },
+            { title: 'Leadership Biographies', content: 'Detailed biographies of Belgian Air Force leaders. Commander profiles, military careers, leadership experience.', url: 'leadership-biographies.html', category: 'leadership', type: 'page', priority: 6 },
+            { title: 'Command Structure', content: 'Organizational structure of the Belgian Air Force. Chain of command, organizational chart, military hierarchy.', url: 'leadership-command-structure.html', category: 'leadership', type: 'page', priority: 6 },
+
+            // Bases and installations
+            { title: 'Air Bases', content: 'Belgian Air Force bases and installations. Beauvechain, Florennes, Kleine Brogel, Melsbroek, Koksijde air bases.', url: 'bases.html', category: 'bases', type: 'page', priority: 7 },
+            { title: 'Bases & Installations', content: 'Complete overview of Belgian Air Force facilities. Military installations, airfields, support facilities.', url: 'bases-installations.html', category: 'bases', type: 'page', priority: 7 },
+
+            // Policy and regulations
+            { title: 'Policy & Regulations', content: 'Belgian Air Force policies and regulations. Code of conduct, flight rules, disciplinary actions, military standards.', url: 'policy-regulations.html', category: 'policy', type: 'page', priority: 6 },
+            { title: 'Sexual Misconduct & Disciplinary', content: 'Policy on sexual misconduct and disciplinary actions. Military conduct, professional standards, disciplinary procedures.', url: 'sexual-misconduct-disciplinary.html', category: 'policy', type: 'page', priority: 5 },
+
+            // Other pages
+            { title: 'History', content: 'Belgian Air Force historical background. Aviation history, military heritage, force development, historical milestones.', url: 'history.html', category: 'about', type: 'page', priority: 7 },
+            { title: 'Gallery', content: 'Photo gallery of Belgian Air Force operations. Aircraft photos, military operations, air force images.', url: 'gallery.html', category: 'media', type: 'page', priority: 6 },
+            { title: 'Media', content: 'Media resources and press materials. Press releases, photos, videos, public affairs.', url: 'media.html', category: 'media', type: 'page', priority: 6 },
+            { title: 'Features', content: 'Featured stories and spotlights. Pilot profiles, squadron features, mission highlights.', url: 'features.html', category: 'news', type: 'page', priority: 6 },
+            { title: 'Fact Sheets', content: 'Belgian Air Force fact sheets. Aircraft specifications, base information, organizational facts.', url: 'fact-sheets.html', category: 'resources', type: 'reference', priority: 6 },
+            { title: 'Downloads', content: 'Downloadable resources and templates. Skins, templates, documentation, tools.', url: 'downloads.html', category: 'resources', type: 'downloads', priority: 6 },
+            { title: 'Training', content: 'Training programs and education. Pilot training, qualification tracks, flight school.', url: 'training.html', category: 'careers', type: 'page', priority: 6 },
+            { title: 'FAQ', content: 'Frequently asked questions. Common inquiries, support questions, general information.', url: 'faq.html', category: 'support', type: 'page', priority: 5 },
+            { title: 'Questions', content: 'Submit your questions. Inquiries, support requests, information requests.', url: 'questions.html', category: 'contact', type: 'page', priority: 5 },
+            { title: 'Join Requests', content: 'Apply to join the Belgian Air Force virtual community. Membership applications, recruitment process.', url: 'join-requests.html', category: 'careers', type: 'page', priority: 5 },
+            { title: 'Staff Contact', content: 'Contact information for staff members. Leadership contact, department contacts.', url: 'staff-contact.html', category: 'contact', type: 'page', priority: 5 },
+            { title: 'Accessibility', content: 'Website accessibility information. Accessibility features, compliance, user assistance.', url: 'accessibility.html', category: 'support', type: 'page', priority: 4 },
+            { title: 'Privacy Policy', content: 'Privacy policy and data protection. Personal information, data usage, privacy rights.', url: 'privacy-policy.html', category: 'legal', type: 'page', priority: 4 },
+            { title: 'Terms of Service', content: 'Terms of service and usage agreement. Website terms, user agreement, legal terms.', url: 'terms-of-service.html', category: 'legal', type: 'page', priority: 4 },
+            { title: 'FOIA', content: 'Freedom of Information Act requests. Information requests, public records, transparency.', url: 'foia.html', category: 'legal', type: 'page', priority: 4 },
+            { title: 'Sitemap', content: 'Complete website navigation guide. Page index, navigation structure, site map.', url: 'sitemap.html', category: 'support', type: 'page', priority: 4 }
+        ];
+
+        let currentFilter = 'all';
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        let currentQuery = '';
+
+        // Fuzzy search algorithm - improved for better matching
+        function fuzzyMatch(query, text) {
+            const queryLower = query.toLowerCase();
+            const textLower = text.toLowerCase();
+
+            // Exact match gets highest score
+            if (textLower.includes(queryLower)) return 1.0;
+
+            // Partial word matches
+            const queryWords = queryLower.split(' ');
+            let wordMatches = 0;
+            queryWords.forEach(word => {
+                if (textLower.includes(word)) wordMatches++;
+            });
+            if (wordMatches > 0) return (wordMatches / queryWords.length) * 0.8;
+
+            // Fuzzy matching with character proximity
+            let score = 0;
+            let queryIndex = 0;
+
+            for (let i = 0; i < textLower.length && queryIndex < queryLower.length; i++) {
+                if (textLower[i] === queryLower[queryIndex]) {
+                    score += 1;
+                    queryIndex++;
+                }
+            }
+
+            return queryIndex === queryLower.length ? score / textLower.length : 0;
+        }
+
+        // Highlight search terms in text
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        // Calculate relevance score - improved matching
+        function calculateRelevance(item, query) {
+            let score = 0;
+            const lowerQuery = query.toLowerCase();
+
+            // Title matches are most important
+            const titleScore = fuzzyMatch(query, item.title);
+            if (titleScore > 0) score += titleScore * 10;
+
+            // Content matches are important
+            const contentScore = fuzzyMatch(query, item.content);
+            if (contentScore > 0) score += contentScore * 5;
+
+            // Category / type match bonus
+            if (item.category && item.category.toLowerCase().includes(lowerQuery)) score += 4;
+            if (item.type && item.type.toLowerCase().includes(lowerQuery)) score += 3;
+
+            // URL/slug matching helps related lookups
+            if (item.url && item.url.toLowerCase().includes(lowerQuery)) score += 2;
+
+            // Priority bonus
+            score += item.priority || 0;
+
+            // Exact phrase matches get bonus
+            if (item.title.toLowerCase().includes(lowerQuery)) score += 3;
+            if (item.content.toLowerCase().includes(lowerQuery)) score += 2;
+
+            // Partial word matching bonus
+            const queryWords = lowerQuery.split(' ');
+            let partialMatches = 0;
+            queryWords.forEach(word => {
+                if (item.title.toLowerCase().includes(word) || item.content.toLowerCase().includes(word)) {
+                    partialMatches++;
+                }
+            });
+            if (partialMatches > 0) score += partialMatches * 0.5;
+
+            return score;
+        }
+
+        // Get search suggestions
+        function getSuggestions(query) {
+            if (query.length < 2) return [];
+
+            const suggestions = new Set();
+            searchData.forEach(item => {
+                // Add title words that start with query
+                item.title.toLowerCase().split(' ').forEach(word => {
+                    if (word.startsWith(query.toLowerCase()) && word.length > query.length) {
+                        suggestions.add(word);
+                    }
+                });
+
+                // Add content phrases
+                const contentWords = item.content.toLowerCase().split(' ');
+                for (let i = 0; i < contentWords.length - 1; i++) {
+                    const phrase = contentWords.slice(i, i + 2).join(' ');
+                    if (phrase.startsWith(query.toLowerCase()) && phrase.length > query.length) {
+                        suggestions.add(phrase);
+                    }
+                }
+            });
+
+            return Array.from(suggestions).slice(0, 5);
+        }
+
+        // Show search suggestions
+        function showSuggestions(suggestions) {
+            const container = document.getElementById('search-suggestions');
+            if (!container) return;
+
+            container.innerHTML = '';
+            if (suggestions.length > 0) {
+                suggestions.forEach(suggestion => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.textContent = suggestion;
+                    div.onclick = () => {
+                        document.getElementById('main-search').value = suggestion;
+                        performSearch();
+                        container.innerHTML = '';
+                    };
+                    container.appendChild(div);
+                });
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        // Save search to history
+        function saveSearch(query) {
+            if (!query.trim()) return;
+
+            searchHistory = searchHistory.filter(item => item !== query);
+            searchHistory.unshift(query);
+            searchHistory = searchHistory.slice(0, 10); // Keep only last 10 searches
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        }
+
+        // Perform advanced search
+        function performSearch(saveToHistory = true) {
+            const query = document.getElementById('main-search').value.trim();
+            currentQuery = query;
+
+            console.log('Performing search for:', query, 'with filter:', currentFilter);
+
+            if (saveToHistory && query) {
+                saveSearch(query);
+            }
+
+            const resultsDiv = document.getElementById('results');
+            const resultsCount = document.getElementById('results-count');
+
+            if (!resultsDiv || !resultsCount) {
+                console.error('Results elements not found');
+                return;
+            }
+
+            if (!query) {
+                // Show all results or popular content when no query
+                let displayData = searchData;
+                if (currentFilter !== 'all') {
+                    displayData = searchData.filter(item => item.category === currentFilter);
+                    console.log('Filtered data for category', currentFilter, ':', displayData.length, 'items');
+                }
+
+                // Sort by priority for "no query" state
+                displayData.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+                displayData = displayData.slice(0, 10); // Show top 10
+
+                resultsDiv.innerHTML = '';
+                if (resultsCount) {
+                    resultsCount.textContent = currentFilter === 'all' ? 'Popular content' : `${currentFilter} content`;
+                }
+
+                displayData.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.innerHTML = `
+                        <div class="result-header">
+                            <h3><a href="${result.url}">${result.title}</a></h3>
+                            <span class="result-category">${result.category} • ${result.type}</span>
+                        </div>
+                        <p class="result-content">${result.content.substring(0, 200)}${result.content.length > 200 ? '...' : ''}</p>
+                        <div class="result-meta">
+                            <span class="result-url">${result.url}</span>
+                            <span class="result-score">Priority: ${result.priority || 0}</span>
+                        </div>
+                    `;
+                    resultsDiv.appendChild(resultItem);
+                });
+                return;
+            }
+
+            let filteredData = searchData;
+            if (currentFilter !== 'all') {
+                filteredData = searchData.filter(item => item.category === currentFilter);
+                console.log('Filtered search data for category', currentFilter, ':', filteredData.length, 'items');
+            }
+
+            // Calculate relevance scores
+            const scoredResults = filteredData.map(item => ({
+                ...item,
+                score: calculateRelevance(item, query)
+            })).filter(item => item.score > 0);
+
+            console.log('Found', scoredResults.length, 'relevant results for query:', query);
+
+            // Sort by relevance score (descending)
+            scoredResults.sort((a, b) => b.score - a.score);
+
+            resultsDiv.innerHTML = '';
+            if (scoredResults.length === 0) {
+                // Fallback: find related items by category, type, or partial keyword match
+                const relatedResults = filteredData.filter(item => {
+                    const lowerQuery = query.toLowerCase();
+                    return item.category.toLowerCase().includes(lowerQuery)
+                        || item.type.toLowerCase().includes(lowerQuery)
+                        || item.url.toLowerCase().includes(lowerQuery)
+                        || item.title.toLowerCase().includes(lowerQuery)
+                        || item.content.toLowerCase().includes(lowerQuery);
+                });
+
+                console.log('Found', relatedResults.length, 'related results as fallback');
+
+                if (relatedResults.length > 0) {
+                    if (resultsCount) {
+                        resultsCount.textContent = `${relatedResults.length} related result${relatedResults.length !== 1 ? 's' : ''} for "${query}"`;
+                    }
+                    relatedResults.slice(0, 10).forEach(result => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        resultItem.innerHTML = `
+                            <div class="result-header">
+                                <h3><a href="${result.url}">${highlightText(result.title, query)}</a></h3>
+                                <span class="result-category">${result.category} • ${result.type}</span>
+                            </div>
+                            <p class="result-content">${highlightText(result.content.substring(0, 200) + (result.content.length > 200 ? '...' : ''), query)}</p>
+                            <div class="result-meta">
+                                <span class="result-url">${result.url}</span>
+                            </div>
+                        `;
+                        resultsDiv.appendChild(resultItem);
+                    });
+                } else {
+                    resultsDiv.innerHTML = `<p class="no-results">No results found for "${query}". Try different keywords, check spelling, or use a broader search term.</p>`;
+                    if (resultsCount) resultsCount.textContent = '';
+                }
+            } else {
+                if (resultsCount) {
+                    resultsCount.textContent = `${scoredResults.length} result${scoredResults.length !== 1 ? 's' : ''} for "${query}"`;
+                }
+
+                scoredResults.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.innerHTML = `
+                        <div class="result-header">
+                            <h3><a href="${result.url}">${highlightText(result.title, query)}</a></h3>
+                            <span class="result-category">${result.category} • ${result.type}</span>
+                        </div>
+                        <p class="result-content">${highlightText(result.content.substring(0, 200) + (result.content.length > 200 ? '...' : ''), query)}</p>
+                        <div class="result-meta">
+                            <span class="result-url">${result.url}</span>
+                            <span class="result-score">Relevance: ${Math.round(result.score * 10) / 10}</span>
+                        </div>
+                    `;
+                    resultsDiv.appendChild(resultItem);
+                });
+            }
+        }
+
+        // Initialize search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('main-search');
+            const headerSearchInput = document.getElementById('header-search-input');
+            const headerSearchSubmit = document.getElementById('header-search-submit');
+            const suggestionsContainer = document.createElement('div');
+            suggestionsContainer.id = 'search-suggestions';
+            suggestionsContainer.className = 'search-suggestions';
+            searchInput.parentNode.style.position = 'relative';
+            searchInput.parentNode.appendChild(suggestionsContainer);
+
+            // Header search button should mirror into the advanced search field
+            if (headerSearchSubmit && headerSearchInput) {
+                headerSearchSubmit.addEventListener('click', function() {
+                    document.getElementById('main-search').value = headerSearchInput.value.trim();
+                    performSearch();
+                });
+                headerSearchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        document.getElementById('main-search').value = headerSearchInput.value.trim();
+                        performSearch();
+                    }
+                });
+            }
+
+            // Real-time search as user types
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                clearTimeout(searchTimeout);
+
+                if (query.length >= 2) {
+                    const suggestions = getSuggestions(query);
+                    showSuggestions(suggestions);
+                    // Auto-search after user stops typing for 300ms
+                    searchTimeout = setTimeout(() => {
+                        performSearch();
+                    }, 300);
+                } else {
+                    showSuggestions([]);
+                    if (query.length === 0) {
+                        performSearch(false);
+                    }
+                }
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                    suggestionsContainer.style.display = 'none';
+                }
+            });
+
+            // Keyboard shortcuts
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                    suggestionsContainer.style.display = 'none';
+                } else if (e.key === 'Escape') {
+                    suggestionsContainer.style.display = 'none';
+                    this.blur();
+                }
+            });
+
+            // Filter buttons - make sure they work
+            function initializeFilterButtons() {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    // Remove any existing listeners to avoid duplicates
+                    btn.removeEventListener('click', filterButtonHandler);
+                    btn.addEventListener('click', filterButtonHandler);
+                });
+            }
+
+            function filterButtonHandler() {
+                console.log('Filter button clicked:', this.dataset.filter);
+                // Remove active class from all buttons
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                console.log('Filter changed to:', currentFilter);
+                suggestionsContainer.style.display = 'none';
+                performSearch(false);
+
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            }
+
+            // Initialize filter buttons
+            initializeFilterButtons();
+
+            // Search history
+            const historyBtn = document.getElementById('search-history-btn');
+            if (historyBtn) {
+                historyBtn.addEventListener('click', function() {
+                    showSearchHistory();
+                });
+            }
+
+            // Initial search
+            performSearch(false);
+        });
+
+        // Show search history
+        function showSearchHistory() {
+            const historyDiv = document.getElementById('search-history');
+            if (!historyDiv) return;
+
+            historyDiv.innerHTML = '<h4>Recent Searches</h4>';
+            if (searchHistory.length === 0) {
+                historyDiv.innerHTML += '<p>No recent searches</p>';
+            } else {
+                searchHistory.forEach(query => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.textContent = query;
+                    item.onclick = () => {
+                        document.getElementById('main-search').value = query;
+                        performSearch();
+                    };
+                    historyDiv.appendChild(item);
+                });
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'control-btn';
+                clearBtn.textContent = 'Clear History';
+                clearBtn.style.marginTop = '10px';
+                clearBtn.onclick = clearSearchHistory;
+                historyDiv.appendChild(clearBtn);
+            }
+            historyDiv.style.display = historyDiv.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Clear search history
+        function clearSearchHistory() {
+            searchHistory = [];
+            localStorage.removeItem('searchHistory');
+            document.getElementById('search-history').style.display = 'none';
+            alert('Search history cleared!');
+        }
+    </script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

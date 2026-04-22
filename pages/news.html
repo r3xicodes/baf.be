@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Stay updated with the latest Air Force news and announcements.">
+    <title>News - Belgian Air Force Virtual MILSIM</title>
+    <link rel="icon" type="image/png" href="../media/Roundel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Skip to Main Content Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header-main" class="header">
+        <!-- Header Top: Logo and Utilities -->
+        <div class="header-top">
+            <div class="container">
+                <div class="header-flex">
+                    <div class="header-logo">
+                        <img src="../media/SCR-20250225-ptwo.png" alt="Belgian Air Force Logo" class="logo-image">
+                        <div class="logo-text">
+                            <h1>Belgian Air Force</h1>
+                            <p class="tagline">Force Aérienne Belge</p>
+                        </div>
+                    </div>
+                    <div class="header-utilities">
+                        <div class="search-container">
+                            <button class="search-toggle" aria-label="Search" title="Search">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <div class="search-panel">
+                                <input type="text" class="search-input" placeholder="Search...">
+                                <button class="search-submit" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="nav-main" class="nav-main" aria-label="Main navigation">
+            <div class="container">
+                <ul class="nav-menu" role="menubar">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link" role="menuitem">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link" role="menuitem">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="operations.html" class="nav-link" role="menuitem">Operations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="careers.html" class="nav-link" role="menuitem">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="news.html" class="nav-link" role="menuitem" aria-current="page">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="search.html" class="nav-link" role="menuitem">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Mobile Navigation Footer -->
+            <div class="nav-mobile-footer">
+                <div class="nav-social">
+                    <a href="#" title="Facebook" aria-label="Visit our Facebook page"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter" aria-label="Visit our Twitter page"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram" aria-label="Visit our Instagram page"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="YouTube" aria-label="Visit our YouTube channel"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><span aria-current="page">News</span></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero Section with Slideshow -->
+    <section class="hero-section">
+        <div class="hero-carousel">
+            <div class="hero-slide active" style="background-image: url('../media/f16-hero.jpg');">
+                <div class="hero-content">
+                    <h2>Air Force News</h2>
+                    <p>Latest Updates and Announcements</p>
+                </div>
+            </div>
+            
+            <!-- Slideshow Controls -->
+            <div class="hero-controls">
+                <button class="hero-btn" id="prev-slide" title="Previous slide" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                <button class="hero-btn" id="next-slide" title="Next slide" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- Slide Indicators -->
+            <div class="hero-indicators">
+                <span class="indicator active" data-slide="0" aria-label="Slide 1"></span>
+            </div>
+            
+            <div class="hero-counter"><span id="slide-counter">1</span> / <span id="total-slides">1</span></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container" id="main-content">
+        <!-- Add News Form -->
+        <section class="featured-section">
+            <h2>Add News Post</h2>
+            <form id="news-form">
+                <input type="text" id="news-title" placeholder="News Title" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <textarea id="news-content" placeholder="News Content" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; height: 100px;"></textarea>
+                <button type="submit" style="padding: 10px 20px; background: #ce1126; color: white; border: none; border-radius: 4px; cursor: pointer;">Add News</button>
+            </form>
+        </section>
+
+        <!-- News Articles -->
+        <section class="featured-section">
+            <h2>Latest News</h2>
+            <div id="news-container" style="display: grid; gap: 30px;">
+                <!-- Dynamic news will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Archive Notice -->
+        <section class="mission-section" style="margin-top: 60px;">
+            <h2>News Archive</h2>
+            <div class="mission-content">
+                <p>Access our complete news archive to stay informed about Air Force operations, achievements, and announcements. News releases are updated regularly to provide the most current information about Air Force activities and important announcements.</p>
+                <p style="margin-top: 15px;">For official press releases and media inquiries, please contact the Air Force Public Affairs office.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-main" class="footer">
+        <div class="footer-content">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-section">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="about.html">About the Belgian Air Force</a></li>
+                            <li><a href="operations.html">Operations</a></li>
+                            <li><a href="careers.html">Careers</a></li>
+                            <li><a href="news.html">News</a></li>
+                            <li><a href="sitemap.html">Sitemap</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#">Recruiting Office</a></li>
+                            <li><a href="#">Career Portal</a></li>
+                            <li><a href="#">Belgian Air Force Official</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="#">FOIA</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Connect With Us</h4>
+                        <div class="social-icons-footer">
+                            <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" title="YouTube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <p class="follow-text">Follow for latest updates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Belgian Air Force | Force Aérienne Belge | Virtual Military Simulation</p>
+                <p class="disclaimer">This is a virtual simulation website for educational purposes. Not affiliated with the official Belgian Air Force.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // News management
+        function loadNews() {
+            const newsContainer = document.getElementById('news-container');
+            let news = JSON.parse(localStorage.getItem('bafNews')) || getDefaultNews();
+            newsContainer.innerHTML = '';
+            news.forEach((item, index) => {
+                const article = document.createElement('article');
+                article.style.cssText = 'background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #ce1126; position: relative;';
+                article.innerHTML = `
+                    <button onclick="deleteNews(${index})" style="position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">Delete</button>
+                    <p style="color: #999; font-size: 14px; margin-bottom: 10px;">${item.date}</p>
+                    <h3 style="color: #003f7f; margin-bottom: 15px; font-size: 22px;">${item.title}</h3>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 15px;">${item.content}</p>
+                `;
+                newsContainer.appendChild(article);
+            });
+        }
+
+        function getDefaultNews() {
+            return [
+                {
+                    title: 'Belgian Air Force Announces New Training Program',
+                    content: 'The Belgian Air Force has announced a comprehensive new training program designed to enhance pilot readiness and operational effectiveness. The program incorporates advanced simulation technology and emphasizes real-world scenario training.',
+                    date: 'April 19, 2026'
+                },
+                {
+                    title: 'F-16 Fleet Modernization Complete',
+                    content: 'The Belgian Air Force has completed the modernization of its F-16 fleet with advanced avionics and weapon systems. This upgrade significantly enhances our operational capabilities.',
+                    date: 'April 17, 2026'
+                },
+                {
+                    title: 'Recruitment Drive Exceeds Targets',
+                    content: 'The Belgian Air Force has achieved record recruitment numbers, attracting skilled pilots and support personnel to join our virtual MILSIM community.',
+                    date: 'April 15, 2026'
+                }
+            ];
+        }
+
+        function addNews(title, content) {
+            let news = JSON.parse(localStorage.getItem('bafNews')) || getDefaultNews();
+            const now = new Date();
+            const date = now.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+            news.unshift({ title, content, date });
+            localStorage.setItem('bafNews', JSON.stringify(news));
+            loadNews();
+        }
+
+        function deleteNews(index) {
+            let news = JSON.parse(localStorage.getItem('bafNews')) || getDefaultNews();
+            news.splice(index, 1);
+            localStorage.setItem('bafNews', JSON.stringify(news));
+            loadNews();
+        }
+
+        document.getElementById('news-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('news-title').value;
+            const content = document.getElementById('news-content').value;
+            addNews(title, content);
+            document.getElementById('news-form').reset();
+        });
+
+        loadNews();
+    </script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
+

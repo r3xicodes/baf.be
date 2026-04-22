@@ -1,0 +1,9 @@
+{"timestamp":"2026-04-21T01:57:06.797Z","action":"LOGIN","username":"admin","details":"::1","success":true}
+{"timestamp":"2026-04-21T01:57:06.800Z","action":"LOGIN_ERROR","username":"unknown","details":"req.csrfToken is not a function","success":false}
+{"timestamp":"2026-04-21T01:57:14.109Z","action":"LOGIN","username":"admin","details":"::1","success":true}
+{"timestamp":"2026-04-21T01:57:14.112Z","action":"LOGIN_ERROR","username":"unknown","details":"req.csrfToken is not a function","success":false}
+{"timestamp":"2026-04-21T01:57:17.885Z","action":"LOGIN","username":"admin","details":"::1","success":true}
+{"timestamp":"2026-04-21T01:57:17.887Z","action":"LOGIN_ERROR","username":"unknown","details":"req.csrfToken is not a function","success":false}
+{"timestamp":"2026-04-21T01:57:26.521Z","action":"LOGIN","username":"admin","details":"::1","success":true}
+{"timestamp":"2026-04-21T01:57:26.523Z","action":"LOGIN_ERROR","username":"unknown","details":"req.csrfToken is not a function","success":false}
+{"timestamp":"2026-04-21T13:34:12.027Z","action":"LOGIN","username":"admin","details":"::1","success":true}

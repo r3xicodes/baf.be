@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive missile training game for Belgian Air Force pilots." />
+    <title>Missile Training Simulator - Belgian Air Force Virtual MILSIM</title>
+    <link rel="icon" type="image/png" href="../media/Roundel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        .option button {
+            width: 100%;
+            padding: 10px;
+            background: #ce1126;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        .option button:hover {
+            background: #a50e1f;
+        }
+        .option button.correct {
+            background: #28a745;
+        }
+        .option button.incorrect {
+            background: #dc3545;
+        }
+        .score {
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .next-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .next-btn:hover {
+            background: #333;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .scenario {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header id="header-main" class="header">
+        <div class="header-top"><div class="container"><div class="header-flex"><div class="header-logo"><img src="../media/SCR-20250225-ptwo.png" alt="Belgian Air Force Logo" class="logo-image"><div class="logo-text"><h1>Belgian Air Force</h1><p class="tagline">Force Aérienne Belge</p></div></div><div class="header-utilities"><div class="search-container"><button class="search-toggle" aria-label="Search" title="Search"><i class="fas fa-search"></i></button><div class="search-panel"><input type="text" class="search-input" placeholder="Search..."><button class="search-submit" type="button"><i class="fas fa-search"></i></button></div></div><button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></div></div></div>
+        <nav id="nav-main" class="nav-main" aria-label="Main navigation"><div class="container"><ul class="nav-menu" role="menubar"><li class="nav-item"><a href="../index.html" class="nav-link" role="menuitem">Home</a></li><li class="nav-item"><a href="about.html" class="nav-link" role="menuitem">About</a></li><li class="nav-item"><a href="operations.html" class="nav-link" role="menuitem">Operations</a></li><li class="nav-item"><a href="careers.html" class="nav-link" role="menuitem">Careers</a></li><li class="nav-item"><a href="news.html" class="nav-link" role="menuitem">News</a></li><li class="nav-item"><a href="contact.html" class="nav-link" role="menuitem">Contact</a></li></ul></div></nav>
+    </header>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><ul><li><a href="../index.html">Home</a></li><li><span aria-current="page">Missile Training Simulator</span></li></ul></div></nav>
+    <section class="hero-section" style="background: linear-gradient(135deg, #000000 0%, #ce1126 100%); height: 300px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px;"><div class="hero-content"><h1>Missile Training Simulator</h1><p>Practice missile identification, engagement tactics, and countermeasures for BAF pilots.</p></div></section>
+    <main id="main-content" class="container main-content">
+        <section class="featured-section">
+            <div class="quiz-container">
+                <div id="question-container">
+                    <div class="scenario" id="scenario">Scenario will appear here</div>
+                    <div class="question" id="question">Question will appear here</div>
+                    <ul class="options" id="options">
+                        <!-- Options will be populated by JS -->
+                    </ul>
+                </div>
+                <div class="score" id="score">Score: 0 / 0</div>
+                <button class="next-btn" id="next-btn" style="display: none;">Next Scenario</button>
+                <div class="result" id="result" style="display: none;"></div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer"><div class="footer-content container"><p>&copy; 2026 Belgian Air Force | Force Aérienne Belge | Virtual Military Simulation</p></div></footer>
+    <script>
+        const questions = [
+            {
+                scenario: "You have a radar lock on an enemy fighter at medium range. The target is maneuvering.",
+                question: "What FOX code missile should you use?",
+                options: ["FOX 1 (Semi-Active Radar)", "FOX 2 (Infrared)", "FOX 3 (Active Radar)", "SAM (Surface-to-Air)"],
+                answer: 0,
+                explanation: "FOX 1 missiles like AIM-7 Sparrow require radar illumination from the launching aircraft."
+            },
+            {
+                scenario: "An enemy aircraft is closing fast from behind. You see the heat signature clearly.",
+                question: "What type of missile is best for this engagement?",
+                options: ["FOX 1", "FOX 2 (Infrared Guided)", "FOX 3", "SAM"],
+                answer: 1,
+                explanation: "FOX 2 missiles like AIM-9 Sidewinder are heat-seeking and ideal for rear hemisphere attacks."
+            },
+            {
+                scenario: "Long-range engagement with enemy bomber. You have radar contact but no lock yet.",
+                question: "Choose the appropriate missile type:",
+                options: ["FOX 1", "FOX 2", "FOX 3 (Active Radar Guided)", "SAM"],
+                answer: 2,
+                explanation: "FOX 3 missiles like AIM-120 AMRAAM have their own radar and can engage beyond visual range."
+            },
+            {
+                scenario: "Incoming missile warning! The threat is radar-guided (FOX 1).",
+                question: "What countermeasure should you deploy?",
+                options: ["Flares", "Chaffs", "ECM Jamming", "Evasive maneuvers"],
+                answer: 1,
+                explanation: "Chaffs are effective against radar-guided missiles (FOX 1 and FOX 3)."
+            },
+            {
+                scenario: "Heat-seeking missile incoming from the side (FOX 2).",
+                question: "Deploy which countermeasure?",
+                options: ["Chaffs", "Flares", "Radar jamming", "Chute deployment"],
+                answer: 1,
+                explanation: "Flares decoy infrared-guided missiles (FOX 2)."
+            },
+            {
+                scenario: "Active radar missile (FOX 3) locked on you.",
+                question: "What is the primary countermeasure?",
+                options: ["Flares", "Chaffs", "IR Jamming", "Speed boost"],
+                answer: 1,
+                explanation: "Chaffs disrupt radar guidance for FOX 3 missiles."
+            },
+            {
+                scenario: "Multiple infrared threats (FOX 2) approaching.",
+                question: "Best countermeasure to deploy?",
+                options: ["Chaffs", "Flares", "Radar decoys", "Altitude change"],
+                answer: 1,
+                explanation: "Flares create false heat sources to confuse IR seekers."
+            },
+            {
+                scenario: "Semi-active radar missile (FOX 1) tracking you.",
+                question: "Countermeasure of choice?",
+                options: ["Flares", "Chaffs", "UV flares", "Smoke screen"],
+                answer: 1,
+                explanation: "Chaffs create false radar targets for semi-active missiles."
+            },
+            {
+                scenario: "Surface-to-Air Missile (SAM) launch detected.",
+                question: "What countermeasure is most effective?",
+                options: ["Flares", "Chaffs", "Evasive maneuvers", "All of the above"],
+                answer: 3,
+                explanation: "SAMs can be radar or IR guided, so use appropriate countermeasures or maneuvers."
+            },
+            {
+                scenario: "Identify: AIM-120 AMRAAM",
+                question: "What category does this missile belong to?",
+                options: ["FOX 1", "FOX 2", "FOX 3", "SAM"],
+                answer: 2,
+                explanation: "AIM-120 AMRAAM is a FOX 3 active radar guided missile."
+            },
+            {
+                scenario: "Identify: AIM-9 Sidewinder",
+                question: "Missile type:",
+                options: ["FOX 1", "FOX 2", "FOX 3", "SAM"],
+                answer: 1,
+                explanation: "AIM-9 Sidewinder is a FOX 2 infrared guided missile."
+            },
+            {
+                scenario: "Identify: AIM-7 Sparrow",
+                question: "Category:",
+                options: ["FOX 1", "FOX 2", "FOX 3", "SAM"],
+                answer: 0,
+                explanation: "AIM-7 Sparrow is a FOX 1 semi-active radar guided missile."
+            },
+            {
+                scenario: "Ground-based air defense system detected. Enemy SAM launch imminent.",
+                question: "What type of missile is this?",
+                options: ["FOX 1", "FOX 2", "FOX 3", "SAM (Surface-to-Air)"],
+                answer: 3,
+                explanation: "SAM stands for Surface-to-Air Missile, launched from ground installations."
+            },
+            {
+                scenario: "Training complete. You are now ready for virtual MILSIM operations!",
+                question: "Final question: What does BAF stand for?",
+                options: ["Belgian Air Force", "British Air Fleet", "Battlefield Air Force", "Belgian Aviation Federation"],
+                answer: 0,
+                explanation: "BAF is the Belgian Air Force (Force Aérienne Belge)."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        const scenarioEl = document.getElementById('scenario');
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const scoreEl = document.getElementById('score');
+        const nextBtn = document.getElementById('next-btn');
+        const resultEl = document.getElementById('result');
+
+        function loadQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            scenarioEl.textContent = currentQuestion.scenario;
+            questionEl.textContent = currentQuestion.question;
+            optionsEl.innerHTML = '';
+            selectedOption = null;
+            currentQuestion.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                li.className = 'option';
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => selectOption(index, button);
+                li.appendChild(button);
+                optionsEl.appendChild(li);
+            });
+            nextBtn.style.display = 'none';
+        }
+
+        function selectOption(index, button) {
+            if (selectedOption !== null) return;
+            selectedOption = index;
+            const currentQuestion = questions[currentQuestionIndex];
+            const buttons = optionsEl.querySelectorAll('button');
+            buttons.forEach((btn, i) => {
+                if (i === currentQuestion.answer) {
+                    btn.classList.add('correct');
+                } else if (i === index) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            if (index === currentQuestion.answer) {
+                score++;
+            }
+            scoreEl.textContent = `Score: ${score} / ${currentQuestionIndex + 1}`;
+            // Show explanation
+            const explanation = document.createElement('p');
+            explanation.textContent = currentQuestion.explanation;
+            explanation.style.marginTop = '10px';
+            explanation.style.fontStyle = 'italic';
+            optionsEl.appendChild(explanation);
+            nextBtn.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('question-container').style.display = 'none';
+            nextBtn.style.display = 'none';
+            resultEl.style.display = 'block';
+            const percentage = Math.round((score / questions.length) * 100);
+            resultEl.innerHTML = `<h2>Training Complete!</h2><p>Your final score: ${score} / ${questions.length} (${percentage}%)</p><p>${percentage >= 80 ? 'Excellent! You are missile-ready for BAF operations.' : percentage >= 60 ? 'Good job! Review the explanations and try again.' : 'Keep practicing! Study the missile types and countermeasures.'}</p><button onclick="restartQuiz()" style="padding: 10px 20px; background: #ce1126; color: white; border: none; border-radius: 4px; cursor: pointer;">Retrain</button>`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedOption = null;
+            scoreEl.textContent = 'Score: 0 / 0';
+            resultEl.style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            loadQuestion();
+        }
+
+        nextBtn.onclick = nextQuestion;
+
+        loadQuestion();
+    </script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
